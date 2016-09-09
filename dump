@@ -1,0 +1,1 @@
+mysql -p -u setyes temp < /var/www/setyes/data/www/boyar-nt.ru/geo.sql

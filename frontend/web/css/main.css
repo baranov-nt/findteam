@@ -1,0 +1,26 @@
+.tt-menu {
+    background-color: #f9f9f9 !important;
+    width: 100% !important;
+}
+.tt-menu .item-container {
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+.tt-menu .item-container:hover {
+    background-color: #f6f6f6 !important;
+}
+.tt-menu .item-header {
+    margin: 0;
+    padding: 0;
+    float: none;
+}
+.tt-menu .item-hint {
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+    float: none;
+}
+.bootstrap-select .filter-option {
+    color: #ffffff !important;
+}

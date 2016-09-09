@@ -1,0 +1,142 @@
+composer install
+npm install
+php init
+yii migrate
+yii rbac/init
+
+------------------------------------------------------------------------------------------------------------------------
+Перевод:
+------------------------------------------------------------------------------------------------------------------------
+Импорт:
+php yii i18n/import @common/messages
+
+Зкспорт в файлы определенной категории:
+сделать Rescan
+php yii i18n/export @common/messages app
+чистим кеш
+
+------------------------------------------------------------------------------------------------------------------------
+Redis:
+------------------------------------------------------------------------------------------------------------------------
+/etc/init.d/redis-server restart
+/etc/init.d/redis-server stop
+/etc/init.d/redis-server start
+
+Для удаленного подключения через Redis Manager изменить на сервере в /etc/redis/redis.conf
+
+bind 127.0.0.1
+на
+bind 0.0.0.0
+
+------------------------------------------------------------------------------------------------------------------------
+Console:
+------------------------------------------------------------------------------------------------------------------------
+
+В PhpStorm открываем Tools / Start SSH sission
+
+Host: 5.45.124.29
+Port: 22
+Логин и пароль от сервера
+
+Перейти в корень: cd /var/www/phpnt/data/www/setyes.com
+
+node var/www/phpnt/data/www/setyes.com/server.js
+
+------------------------------------------------------------------------------------------------------------------------
+node.js:
+------------------------------------------------------------------------------------------------------------------------
+redis-server.exe
+redis-cli
+node server.js
+
+Cron:
+@reboot
+/root/.nvm/versions/node/v5.9.1/bin/node /var/www/phpnt/data/www/setyes.com/server.js >/dev/null 2>&1
+
+Для проверки версии node.js, в консоле вводим:
+
+# node -v
+
+------------------------------------------------------------------------------------------------------------------------
+GitHub:
+------------------------------------------------------------------------------------------------------------------------
+
+echo # setyes >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/baranov-nt/basic.git
+git push -u origin master
+
+------------------------------------------------------------------------------------------------------------------------
+Hosts:
+------------------------------------------------------------------------------------------------------------------------
+
+	    127.0.0.1       basic.dev
+    	127.0.0.1       www.basic.dev
+    	127.0.0.1       test.basic.dev
+    	127.0.0.1       www.test.basic.dev
+    	127.0.0.1       admin.basic.dev
+    	127.0.0.1       www.admin.basic.dev
+
+------------------------------------------------------------------------------------------------------------------------
+Virtual hosts:
+------------------------------------------------------------------------------------------------------------------------
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot "c:/Server/data/htdocs/basic.dev/www/basic/frontend/web"
+    ServerName basic.dev
+    ServerAlias www.basic.dev
+    ErrorLog "c:/Server/data/htdocs/basic.dev/www/logs/localhost-error.log"
+    CustomLog "c:/Server/data/htdocs/basic.dev/www/logs/localhost-access.log" common
+    <Directory />
+    	Options FollowSymLinks
+    	AllowOverride All
+    </Directory>
+    <Directory "c:/Server/data/htdocs/basic.dev/www/basic/frontend/web">
+    	Options All
+    	AllowOverride All
+    	Order allow,deny
+    	allow from all
+    </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot "c:/Server/data/htdocs/basic.dev/www/basic/backend/web"
+    ServerName admin.basic.dev
+    ServerAlias www.admin.basic.dev
+    ErrorLog "c:/Server/data/htdocs/basic.dev/www/logs/localhost-error.log"
+    CustomLog "c:/Server/data/htdocs/basic.dev/www/logs/localhost-access.log" common
+    <Directory />
+    	Options FollowSymLinks
+    	AllowOverride All
+    </Directory>
+    <Directory "c:/Server/data/htdocs/basic.dev/www/basic/backend/web">
+    	Options All
+    	AllowOverride All
+    	Order allow,deny
+    	allow from all
+    </Directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot "c:/Server/data/htdocs/basic.dev/www/basic/frontend/web"
+    ServerName test.basic.dev
+    ServerAlias www.test.basic.dev
+    ErrorLog "c:/Server/data/htdocs/basic.dev/www/logs/localhost-error.log"
+    CustomLog "c:/Server/data/htdocs/basic.dev/www/logs/localhost-access.log" common
+    <Directory />
+        Options FollowSymLinks
+        AllowOverride All
+    </Directory>
+    <Directory "c:/Server/data/htdocs/basic.dev/www/basic/frontend/web">
+        Options All
+        AllowOverride All
+        Order allow,deny
+        allow from all
+        RewriteRule . index-test.php
+    </Directory>
+</VirtualHost>
