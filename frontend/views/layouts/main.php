@@ -8,14 +8,17 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
-use phpnt\bootstrapNotify\BootstrapNotify;
-use phpnt\fontAwesome\FontAwesomeAsset;
+use frontend\assets\InspiniaAsset;
 use common\widgets\LanguageSelect\LanguageSelect;
 use yii\helpers\Url;
+use phpnt\bootstrapNotify\BootstrapNotify;
+use phpnt\fontAwesome\FontAwesomeAsset;
+use phpnt\animateCss\AnimateCssAsset;
 
-AppAsset::register($this);
+
+InspiniaAsset::register($this);
 FontAwesomeAsset::register($this);
+AnimateCssAsset::register($this);
 $user = Yii::$app->user->identity;
 ?>
 <?php $this->beginPage() ?>
