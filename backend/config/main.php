@@ -9,12 +9,25 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'name' => 'app-backend',
+    'layout' => 'adminlte-main',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log', 'geoData'],
     'modules' => [
+        'cities' => [
+            'class' => 'backend\modules\cities\Module',
+        ],
         'company' => [
             'class' => 'backend\modules\company\Module',
+        ],
+        'content' => [
+            'class' => 'backend\modules\content\Module',
+        ],
+        'countries' => [
+            'class' => 'backend\modules\countries\Module',
+        ],
+        'setting' => [
+            'class' => 'backend\modules\setting\Module',
         ],
         'translate' => [
             'class' => 'backend\modules\translate\Module',

@@ -14,6 +14,8 @@ class InspiniaAsset extends AssetBundle
     public $css = [
         'css/main.css',
         'css/site.css',
+        //'css/plugins/iCheck/custom.css',
+        'css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css',
         'css/plugins/toastr/toastr.min.css',
         'js/plugins/gritter/jquery.gritter.css',
         'css/style.css',
@@ -35,7 +37,7 @@ class InspiniaAsset extends AssetBundle
         'js/demo/sparkline-demo.js',
         'js/plugins/chartJs/Chart.min.js',
         'js/plugins/toastr/toastr.min.js',
-        'js/main.js'
+        'js/main.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

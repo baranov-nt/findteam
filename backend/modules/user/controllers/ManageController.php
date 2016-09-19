@@ -2,15 +2,12 @@
 
 namespace backend\modules\user\controllers;
 
-use common\models\GeoCity;
-use common\models\GeoCountry;
-use common\models\ProfileUserForm;
-use common\models\ProfileUserSearch;
+use common\models\forms\UserForm;
+use common\models\search\ProfileUserSearch;
 use common\models\User;
 use Yii;
 use common\models\Identity;
 use backend\controllers\BehaviorsController;
-use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -52,7 +49,7 @@ class ManageController extends BehaviorsController
      */
     public function actionCreate()
     {
-        $model = new ProfileUserForm(['scenario' => 'create']);
+        $model = new UserForm(['scenario' => 'user']);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -71,13 +68,9 @@ class ManageController extends BehaviorsController
      */
     public function actionUpdate($id)
     {
-        /* @var $model ProfileUserForm */
+        /* @var $model UserForm */
         $model = $this->findModel($id);
-        if ($model->profileUser->company_id) {
-            $model->scenario = 'updateCompany';
-        } else {
-            $model->scenario = 'update';
-        }
+        $model->scenario = 'userUpdate';
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -168,7 +161,7 @@ class ManageController extends BehaviorsController
      */
     protected function findModel($id)
     {
-        if (($model = ProfileUserForm::findOne($id)) !== null) {
+        if (($model = UserForm::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -7,7 +7,7 @@
  */
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\ProfileUserForm */
+/* @var $model \common\models\forms\UserForm */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -18,6 +18,8 @@ use dosamigos\typeahead\TypeAhead;
 use yii\widgets\Pjax;
 use phpnt\awesomeBootstrapCheckbox\AwesomeBootstrapCheckboxAsset;
 use phpnt\bootstrapSelect\BootstrapSelectAsset;
+use common\models\forms\GeoCountryForm;
+use common\models\forms\GeoCityForm;
 ?>
 <div class="identity-form">
     <div class="box box-success" style="margin-bottom: 50px;">
@@ -55,7 +57,9 @@ use phpnt\bootstrapSelect\BootstrapSelectAsset;
                             }
                         ])->hint(Yii::t('app', 'Укажите пол')); ?>
             </div>
-            <h5><strong><?= Yii::t('app', 'Дата рождения') ?></strong></h5>
+            <div class="col-md-12">
+                <h5><strong><?= Yii::t('app', 'Дата рождения') ?></strong></h5>
+            </div>
 
             <div class="col-md-4">
                 <?= $form->field($model, 'day_birth')->dropDownList($model->dayBirthList, [
@@ -89,15 +93,17 @@ use phpnt\bootstrapSelect\BootstrapSelectAsset;
             <div class="col-md-12">
                 <?= $form->field($model, 'email')->textInput(['placeholder' => 'Электронная почта'])  ?>
             </div>
+
             <div class="col-md-12">
                 <?= $form->field($model, 'country_id', [
                     'template' => '{label}{input}{error}'])
-                    ->dropDownList($model->countriesList, [
+                    ->dropDownList(GeoCountryForm::getCountriesList(), [
                         'class'  => 'form-control selectpicker',
                         'data' => [
                             'style' => 'btn-primary',
                             'live-search' => true,
                             'size' => 7,
+                            'title' => Yii::t('app', 'Выберите страну'),
                         ],
                         'onchange' => '
             $.pjax({
@@ -109,7 +115,10 @@ use phpnt\bootstrapSelect\BootstrapSelectAsset;
                 scrollTo: false
             })']) ?>
             </div>
-            <div class="col-md-12">
+
+            <?php
+/*            if ($model->country_id):
+                */?>
                 <?php
                 $engine = new Bloodhound([
                     'name' => 'countriesEngine',
@@ -123,56 +132,88 @@ use phpnt\bootstrapSelect\BootstrapSelectAsset;
                     ]
                 ]);
                 ?>
-                <?= $form->field($model, 'city')->widget(
-                    TypeAhead::className(),
-                    [
-                        'options' => ['class' => 'form-control'],
-                        'engines' => [ $engine ],
-                        'clientOptions' => [
-                            'highlight' => true,
-                            'minLength' => 2,
-                        ],
-                        'clientEvents' => [
-                            'typeahead:selected' => new \yii\web\JsExpression(
-                                'function(obj, datum, name) { 
+            <div class="col-md-12">
+                <?php
+                if ($model->city_id) {
+                    $model->city = GeoCityForm::getCityName($model->city_id);
+                }
+                ?>
+                <?= $form->field($model, 'city', ['template' => '{label}{input}<i>{hint}</i>{error}'])->widget(
+                TypeAhead::className(),
+                [
+                    'options' => ['class' => 'form-control'],
+                    'engines' => [ $engine ],
+                    'clientOptions' => [
+                        'highlight' => true,
+                        'minLength' => 2,
+                    ],
+                    'clientEvents' => [
+                        'typeahead:selected' => new \yii\web\JsExpression(
+                            'function(obj, datum, name) {  
                         $("#city-id").val(datum.id);
                     }'
-                            ),
-                        ],
-                        'dataSets' => [
-                            [
-                                'name' => 'city',
-                                'displayKey' => 'city',
-                                'source' => $engine->getAdapterScript(),
-                                'templates' => [
-                                    'suggestion' => new \yii\web\JsExpression("function(data){ return '<div class=\"col-xs-12 item-container\"><div class=\"item-header\">' + data.city + '</div><div class=\"item-hint\">' + data.region + '</div></div>'; }"),
-                                ],
-                            ]
+                        ),
+                    ],
+                    'dataSets' => [
+                        [
+                            'name' => 'city',
+                            'displayKey' => 'city',
+                            'source' => $engine->getAdapterScript(),
+                            'templates' => [
+                                'suggestion' => new \yii\web\JsExpression("function(data){ return '<div class=\"col-xs-12 item-container\"><div class=\"item-header\">' + data.city + '</div><div class=\"item-hint\">' + data.region + '</div></div>'; }"),
+                            ],
                         ]
                     ]
-                );?>
+                ]
+            );?>
             </div>
+                <?= $form->field($model, 'city_id', ['template' => '{input}'])->hiddenInput(['id' => 'city-id'])->label(false); ?>
+                <?php
+/*            else:
+                */?><!--
+                <div class="col-md-12">
+                    <?/*= $form->field($model, 'city', ['template' => '{label}{input}<i>{hint}</i>{error}'])
+                        ->textInput(['class' => 'form-control disabled', 'disabled' => true]) */?>
+                </div>-->
+                <?php
+/*            endif;
+            */?>
+
+            <!--<div class="col-md-12">
+                <?/*= $form->field($model, 'city_id')->dropDownList(GeoCityForm::getCitiesList(), [
+                    'class'         => 'form-control selectpicker',
+                    'data' => [
+                        'style' => 'btn-primary',
+                        'size' => 7,
+                        'title' => Yii::t('app', 'Город')
+                    ]])->label(false) */?>
+            </div>-->
 
             <div class="col-md-12">
-                <?= $form->field($model, 'city_id', [
-                    'template' => '{input}'])->hiddenInput(['id' => 'city-id'])->label(false); ?>
-            </div>
-
-            <div class="col-md-12">
-                <?= $form->field($model, 'phone',
-                    [
-                        'template' => '{label}
+                <?php
+                if ($model->country_id):
+                    ?>
+                    <?= $form->field($model, 'phone', ['template' => '{label}
+                            <div class="input-group">
+                                <span class="input-group-addon">+'.GeoCountryForm::getCallingCode($model->country_id).'</span>{input}
+                             </div>
+                      <i>{hint}</i>{error}'])->widget(MaskedInput::className(),[
+                    'name' => 'phone',
+                    'mask' => $model->phoneMask])
+                    ->hint(Yii::t('app', 'Телефон')) ?>
+                    <?php
+                else:
+                    ?>
+                    <?= $form->field($model, 'phone', ['template' => '{label}
                             <div class="input-group">
                                 <span class="input-group-addon">+'.$model->calling_code.'</span>{input}
                              </div>
-                      <i>{hint}</i>{error}']
-                )->widget(MaskedInput::className(),[
-                    'name' => 'phone',
-                    'mask' => $model->phone_mask
-                ])
+                      <i>{hint}</i>{error}'])->textInput(['class' => 'form-control disabled', 'disabled' => true])
                     ->hint(Yii::t('app', 'Телефон')) ?>
+                    <?php
+                endif;
+                ?>
             </div>
-
 
             <div class="col-md-12">
                 <?= $form->field($model, 'item_name')->dropDownList(isset($model->profileUser->company_id) ? $model->rolesOfCompanyList : $model->rolesOfUserList, [
@@ -208,10 +249,12 @@ use phpnt\bootstrapSelect\BootstrapSelectAsset;
                 <?= $form->field($model, 'confirm_password')->passwordInput(['placeholder' => Yii::t('app', 'Подтвердите пароль')]) ?>
             </div>
 
-            <?= Html::hiddenInput('model', 'common\models\ProfileUserForm') ?>
+            <?= Html::hiddenInput('model', 'common\models\forms\UserForm') ?>
             <?= Html::hiddenInput('scenario', $model->scenario) ?>
             <?= Html::hiddenInput('form', '@backend/modules/user/views/manage/_form') ?>
             <?= Html::hiddenInput('id', $model->id) ?>
+
+            <?= $form->field($model, 'model_scenario', ['template' => '{input}'])->hiddenInput(['value' => $model->scenario])->label(false) ?>
 
             <div class="col-md-12">
                 <div class="form-group">

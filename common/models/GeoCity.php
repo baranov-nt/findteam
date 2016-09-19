@@ -35,7 +35,7 @@ class GeoCity extends ActiveRecord
     {
         return [
             [['region_id'], 'integer'],
-            [['name_ru', 'name_en', 'lat', 'lon', 'okato'], 'required'],
+            [['name_ru', 'name_en', 'lat', 'lon'], 'required'],
             [['lat', 'lon'], 'number'],
             [['name_ru', 'name_en'], 'string', 'max' => 128],
             [['okato'], 'string', 'max' => 20],

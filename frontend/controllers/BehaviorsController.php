@@ -33,8 +33,14 @@ class BehaviorsController extends Controller {
                     [
                         'allow' => true,
                         'controllers' => ['site'],
-                        'actions' => ['index', 'login', 'signup', 'user-signup', 'company-signup', 'activate-account', 'request-password-reset', 'reset-password',
+                        'actions' => ['index', 'login', 'signup', 'set-scenario', 'activate-account', 'request-password-reset', 'reset-password',
                             'set-country', 'set-city', 'set-month', 'error'],
+                    ],
+                    [
+                        'allow' => true,
+                        'controllers' => ['site'],
+                        'actions' => ['main'],
+                        'roles' => ['@']
                     ],
                 ]
             ],

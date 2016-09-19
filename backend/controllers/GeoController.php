@@ -10,7 +10,7 @@ namespace backend\controllers;
 
 use common\models\GeoCity;
 use common\models\GeoCountry;
-use common\models\ProfileUserForm;
+use common\models\forms\ProfileUserForm;
 use Yii;
 use yii\helpers\Json;
 use yii\web\Controller;
@@ -22,14 +22,13 @@ class GeoController extends Controller
         /* @var $model ProfileUserForm */
         $id = Yii::$app->request->post('id');
         $model = Yii::$app->request->post('model');
-        $model = $id ? $model::findOne($id) : new $model;
+        $model = $id ? $model::findOne($id) : new $model();
         $model->scenario = Yii::$app->request->post('scenario');
         $model->load(Yii::$app->request->post());
-        $model->phone = null;
-        $model->calling_code    = $model->callingCode;
-        $model->phone_mask      = $model->phoneMask;
+        if (isset($model->phone)) {
+            $model->phone = null;
+        }
         if ($model->country_id == Yii::$app->geoData->country) {
-            $model->city        = $model->getCityName(Yii::$app->geoData->city);
             $model->city_id     = Yii::$app->geoData->city;
         } else {
             $model->city        = null;

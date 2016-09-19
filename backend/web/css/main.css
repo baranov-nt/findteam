@@ -24,3 +24,6 @@
 .bootstrap-select .filter-option {
     color: #ffffff !important;
 }
+.twitter-typeahead {
+    width: 100% !important;
+}

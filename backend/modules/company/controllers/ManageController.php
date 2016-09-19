@@ -2,12 +2,12 @@
 
 namespace backend\modules\company\controllers;
 
+use common\models\forms\UserForm;
 use common\models\Identity;
-use common\models\ProfileCompanyForm;
 use common\models\ProfileCompanyIdentity;
 use Yii;
 use common\models\ProfileCompany;
-use common\models\ProfileCompanySearch;
+use common\models\search\ProfileCompanySearch;
 use backend\controllers\BehaviorsController;
 use yii\web\NotFoundHttpException;
 
@@ -50,7 +50,7 @@ class ManageController extends BehaviorsController
      */
     public function actionCreate()
     {
-        $model = new ProfileCompanyForm(['scenario' => 'create']);
+        $model = new UserForm(['scenario' => 'company']);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->profileUser->company_id]);

@@ -153,6 +153,14 @@ class I18N extends \yii\i18n\I18N
                 'on missingTranslation' => $this->missingTranslationHandler
             ];
         }
+        if (!isset($this->translations['content']) && !isset($this->translations['content*'])) {
+            $this->translations['content'] = [
+                'class' => DbMessageSource::className(),
+                'sourceMessageTable' => $this->sourceMessageTable,
+                'messageTable' => $this->messageTable,
+                'on missingTranslation' => $this->missingTranslationHandler
+            ];
+        }
         parent::init();
     }
 }

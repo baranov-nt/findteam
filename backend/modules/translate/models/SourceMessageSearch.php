@@ -244,7 +244,7 @@ class SourceMessageSearch extends SourceMessage
             ->andWhere(['!=', 'category', 'yii'])
             ->count();
 
-        SourceMessage::deleteAll('hash != :hash AND category != :category', [':hash' => $msgHash, ':category' => 'yii']);
+        SourceMessage::deleteAll('hash != :hash AND category != :category AND content_id IS NULL', [':hash' => $msgHash, ':category' => 'yii']);
 
         return ['new' => $newMessages, 'deleted' => $modelSourceMessage];
     }

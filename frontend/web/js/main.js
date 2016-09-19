@@ -1,6 +1,59 @@
 /**
  * Created by Vladimir Baranov on 09.09.2016.
  */
+
+
+$(document).ready(function () {
+
+    $('body').scrollspy({
+        target: '.navbar-fixed-top',
+        offset: 80
+    });
+
+    // Page scrolling feature
+    $('a.page-scroll').bind('click', function(event) {
+        var link = $(this);
+        $('html, body').stop().animate({
+            scrollTop: $(link.attr('href')).offset().top - 50
+        }, 500);
+        event.preventDefault();
+    });
+});
+
+var cbpAnimatedHeader = (function() {
+    var docElem = document.documentElement,
+        header = document.querySelector( '.navbar-default' ),
+        didScroll = false,
+        changeHeaderOn = 10;
+    function init() {
+        window.addEventListener( 'scroll', function( event ) {
+            if( !didScroll ) {
+                didScroll = true;
+                setTimeout( scrollPage, 10 );
+            }
+        }, false );
+    }
+    function scrollPage() {
+        var sy = scrollY();
+        if ( sy >= changeHeaderOn ) {
+            $(header).addClass('navbar-scroll')
+        }
+        else {
+            $(header).removeClass('navbar-scroll')
+        }
+        didScroll = false;
+    }
+    function scrollY() {
+        return window.pageYOffset || docElem.scrollTop;
+    }
+    init();
+
+})();
+
+// Activate WOW.js plugin for animation on scrol
+new WOW().init();
+
+
 $(document).ready(function() {
     /*setTimeout(function() {
         toastr.options = {
@@ -90,8 +143,8 @@ $(document).ready(function() {
         animateScale: false
     };
 
-    var ctx = document.getElementById("doughnutChart").getContext("2d");
-    var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+   /* var ctx = document.getElementById("doughnutChart").getContext("2d");
+    var DoughnutChart = new Chart(ctx).Doughnut(doughnutData, doughnutOptions);*/
 
     var polarData = [
         {
@@ -129,7 +182,7 @@ $(document).ready(function() {
         animateRotate: true,
         animateScale: false
     };
-    var ctx = document.getElementById("polarChart").getContext("2d");
-    var Polarchart = new Chart(ctx).PolarArea(polarData, polarOptions);
+    /*var ctx = document.getElementById("polarChart").getContext("2d");
+    var Polarchart = new Chart(ctx).PolarArea(polarData, polarOptions);*/
 
 });

@@ -8,13 +8,12 @@
 
 namespace common\models;
 
-use yii\helpers\ArrayHelper;
+use common\models\forms\UserOnlineForm;
 use yii\web\IdentityInterface;
 
 /**
  * @property string $callingCode
- * @property string $cityName
- * @property array $countriesList
+ *
  * @property array $dayBirthList
  * @property array $monthBirthList
  * @property array $yearBirthList
@@ -24,11 +23,7 @@ use yii\web\IdentityInterface;
  * @property array $userAccountTypeList
  *
  * @property integer $adminUserId
- * @property integer $cityUser
- * @property integer $countryUser
- * @property array $onlineList
- * @property array $onlineMark
- * @property boolean $onlineStatus
+ *
  * @property string $roleDescription
  * @property string $roleName
  * @property array $rolesList
@@ -44,6 +39,7 @@ use yii\web\IdentityInterface;
  * @property Address $mainAddressUser
  * @property AuthAssignment $roleAssignment
  * @property AuthAssignment $assignment
+ * @property UserOnlineForm $userOnlineForm
  */
 class Identity extends User implements IdentityInterface
 {
@@ -66,14 +62,10 @@ class Identity extends User implements IdentityInterface
     const STATUS_COMPANY_BLOCKED = 2;
 
     /* Тип пользователя */
-    const TYPE_USER_USUAL   = 0;
+    const TYPE_USER_USUAL   = 1;
 
     /* Тип компании */
-    const TYPE_COMPANY_USUAL   = 0;
-
-    /* Онлайн статус */
-    const ONLINE_IS     = 1;
-    const ONLINE_NOT    = 2;
+    const TYPE_COMPANY_USUAL   = 1;
 
     /* Тип аккаунта */
     const OWNER_USER     = 0;
@@ -102,47 +94,6 @@ class Identity extends User implements IdentityInterface
                 }
         }
         return $admin;
-    }
-
-    public function getCallingCode()
-    {
-        $model = GeoCountry::findOne($this->country_id);
-        return $model->calling_code;
-    }
-
-    public function getCityName($city)
-    {
-        $model = GeoCity::findOne($city);
-        if (\Yii::$app->language == 'ru') {
-            return $model->name_ru;
-        }
-        return $model->name_en;
-    }
-
-    public function getCityUser()
-    {
-        /* @var $address Address */
-        $address = $this->profileUser->addresses[0];
-        return $address->city_id;
-    }
-
-    public function getCountryUser()
-    {
-        return $this->mainAddressUser->country_id;
-    }
-
-    public function getCountriesList()
-    {
-        if (\Yii::$app->language == 'ru') {
-            $countries = GeoCountry::find()
-                ->where(['is not', 'phone_number_digits_code', null])
-                ->orderBy('name_ru')
-                ->all();
-            return ArrayHelper::map($countries, 'id', 'name_ru');
-        }
-        $countries = GeoCountry::find()
-            ->all();
-        return ArrayHelper::map($countries, 'id', 'short_name');
     }
 
     public function getDayBirthList()
@@ -184,35 +135,6 @@ class Identity extends User implements IdentityInterface
             $i++;
         }
         return $items;
-    }
-
-    public static function getOnlineList()
-    {
-        return [
-            self::ONLINE_IS     => \Yii::t('app', 'Онлайн'),
-            self::ONLINE_NOT    => \Yii::t('app', 'Оффлайн'),
-        ];
-    }
-
-    public function getOnlineStatus()
-    {
-        $model = UserOnline::findOne($this->id);
-        if ($model) {
-            $time = time() - $model->online;
-            if ($time <= \Yii::$app->params['online']) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function getOnlineMark()
-    {
-        $online = $this->onlineStatus;
-        if ($online) {
-            return '<span class="label label-primary">online</span>';
-        }
-        return '<span class="label label-warning">offline</span>';
     }
 
     public function getPhoneMask()
@@ -410,9 +332,33 @@ class Identity extends User implements IdentityInterface
     }
 
     /* Служебные методы */
+    /* ------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
     public function clearString($string)
     {
         return str_replace(['\\', '_', '-', ' ', '(', ')'], '', $string);
+    }
+
+    public static function encript($data)
+    {
+        $key_size =  strlen($data);
+        $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+        $ciphertext = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, \Yii::$app->params['secret_key'],
+            $data, MCRYPT_MODE_CBC, $iv);
+        $ciphertext = $iv . $ciphertext;
+        return $ciphertext_base64 = base64_encode($ciphertext);
+    }
+
+    public static function decript($data)
+    {
+        $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+        $ciphertext_dec = base64_decode($data);
+        $iv_dec = substr($ciphertext_dec, 0, $iv_size);
+        $ciphertext_dec = substr($ciphertext_dec, $iv_size);
+        $plaintext_dec = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, \Yii::$app->params['secret_key'],
+            $ciphertext_dec, MCRYPT_MODE_CBC, $iv_dec);
+        return str_replace("\0", "", $plaintext_dec);
     }
 
     public static function findByEmail($email)
@@ -496,6 +442,7 @@ class Identity extends User implements IdentityInterface
     public function setPassword($password)
     {
         $this->password_hash = \Yii::$app->security->generatePasswordHash($password);
+        $this->password_encrypted   = self::encript($password);
     }
 
     public function validatePassword($password)
@@ -517,6 +464,14 @@ class Identity extends User implements IdentityInterface
 
     public function getMainAddressUser() {
         return $this->hasOne(Address::className(), ['user_id' => 'id'])->where(['main' => true]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserOnlineForm()
+    {
+        return $this->hasOne(UserOnlineForm::className(), ['user_id' => 'id']);
     }
 
     /* Классы идентификации */

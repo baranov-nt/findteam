@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: phpNT - http://phpnt.com
+ * Date: 09.09.2016
+ * Time: 12:52
+ */
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -8,7 +14,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use frontend\assets\InspiniaAsset;
+use frontend\assets\InspiniaLandingAsset;
 use common\widgets\LanguageSelect\LanguageSelect;
 use yii\helpers\Url;
 use phpnt\bootstrapNotify\BootstrapNotify;
@@ -16,7 +22,7 @@ use phpnt\fontAwesome\FontAwesomeAsset;
 use phpnt\animateCss\AnimateCssAsset;
 
 
-InspiniaAsset::register($this);
+InspiniaLandingAsset::register($this);
 FontAwesomeAsset::register($this);
 AnimateCssAsset::register($this);
 $user = Yii::$app->user->identity;

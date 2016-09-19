@@ -26,6 +26,7 @@ use Yii;
  *
  * @property ProfileCompany $company
  * @property User $id0
+ * @property SpecUser[] $specUsers
  */
 class ProfileUser extends \yii\db\ActiveRecord
 {
@@ -43,10 +44,10 @@ class ProfileUser extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['type'], 'required'],
             [['type', 'sex', 'day_birth', 'month_birth', 'year_birth', 'age', 'social_status', 'children', 'children_count', 'company_id'], 'integer'],
+            [['tariff'], 'string', 'max' => 20],
             [['first_name', 'last_name', 'middle_name'], 'string', 'max' => 32],
-            [['inn', 'tariff'], 'string', 'max' => 18],
+            [['inn'], 'string', 'max' => 18],
             [['company_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProfileCompany::className(), 'targetAttribute' => ['company_id' => 'id']],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['id' => 'id']],
         ];
@@ -91,5 +92,13 @@ class ProfileUser extends \yii\db\ActiveRecord
     public function getId0()
     {
         return $this->hasOne(User::className(), ['id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSpecUsers()
+    {
+        return $this->hasMany(SpecUser::className(), ['user_id' => 'id']);
     }
 }

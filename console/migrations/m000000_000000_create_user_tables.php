@@ -22,13 +22,14 @@ class m000000_000000_create_user_tables extends Migration
             'alias'                 => $this->string()->unique()->comment('Уникальная ссылка'),
             'username'              => $this->string(32)->unique()->comment('Логин'),
             'email'                 => $this->string(64)->unique()->comment('Электронная почта'),
-            'phone'                 => $this->string(11)->unique()->comment('Телефон'),
+            'phone'                 => $this->string(11)->comment('Телефон'),
             'full_phone'            => $this->string(15)->unique()->comment('Полный номер'),
             'description'           => $this->text()->comment('Описание'),
             'status'                => $this->smallInteger(1)->notNull()->comment('Статус'),
             'image_main'            => $this->string(20)->defaultValue('mainUser')->comment('Метка изображения'),
             'images'                => $this->string(20)->defaultValue('imagesUser')->comment('Метка изображения доп фото'),
             'password_hash'         => $this->string()->comment('Пароль'),
+            'password_encrypted'    => $this->string()->comment('Зашифрованный пароль'),
             'auth_key'              => $this->string(32)->comment('Ключ авторизации'),
             'password_reset_token'  => $this->string()->comment('Ключ сброса пароля'),
             'email_confirm_token'   => $this->string()->comment('Ключ подтверждения эл. адреса'),
@@ -47,7 +48,7 @@ class m000000_000000_create_user_tables extends Migration
         /* Профиль компании */
         $this->createTable('{{%profile_company}}', [
             'id'                    => $this->primaryKey()->comment('ID компании'),
-            'type'                  => $this->smallInteger(1)->comment('Тип компании'),
+            'type'                  => $this->integer()->comment('Тип компании'),
             'tariff'                => $this->string(20)->comment('Тариф'),
             'status'                => $this->smallInteger(1)->notNull()->comment('Статус'),
             'name'                  => $this->string()->unique()->comment('Название компании'),
@@ -66,8 +67,8 @@ class m000000_000000_create_user_tables extends Migration
         /* Профиль пользователя */
         $this->createTable('{{%profile_user}}', [
             'id'                    => $this->primaryKey()->comment('ID пользователя'),
-            'type'                  => $this->smallInteger(1)->notNull()->comment('Тип пользователя'),         // например (сантехник, бухгалтер, модель), а роли определяют тип аккаунта
-                                                                                                                // например (администратор сайта, редактор сайта, владелец компании, пользователь)
+            'type'                  => $this->integer()->comment('Тип пользователя'),           // например (фотограф, модель), а роли определяют тип аккаунта
+                                                                                                // например (администратор сайта, редактор сайта, владелец компании, пользователь)
             'tariff'                => $this->string(20)->comment('Тариф'),
             'first_name'            => $this->string(32)->comment('Имя'),
             'last_name'             => $this->string(32)->comment('Фамилия'),
@@ -131,7 +132,8 @@ class m000000_000000_create_user_tables extends Migration
         /* Дополнительные контакты к пользователям (много ко многим) */
         $this->createTable('{{%contact}}', [
             'id'                    => $this->primaryKey()->comment('ID адреса'),
-            'type'                  => $this->smallInteger(1)->notNull()->comment('Тип контакта'),              // 0 - телефон, 1 - email, 2 - skype, 3 - whatsapp, 4 - viber, 5 - почта
+            'type'                  => $this->smallInteger(1)->notNull()->comment('Тип контакта'),              // 0 - телефон, 1 - email, 2 - skype, 3 - whatsapp,
+                                                                                                                // 4 - viber, 5 - почта
             'contact'               => $this->string()->comment('Контакт'),
             'address_id'            => $this->integer()->unique()->comment('Адрес'),                            // если активно, время работы адреса
             'user_id'               => $this->integer()->comment('ID пользователя'),

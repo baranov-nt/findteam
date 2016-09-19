@@ -42,8 +42,26 @@ class BehaviorsController extends Controller {
                         'roles' => ['redactor'],
                     ],
                     [
+                        'controllers' => ['cities/manage'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['redactor']
+                    ],
+                    [
                         'controllers' => ['company/manage'],
                         'actions' => ['index', 'view', 'create', 'update', 'multiactive', 'multiblock'],
+                        'allow' => true,
+                        'roles' => ['admin']
+                    ],
+                    [
+                        'controllers' => ['countries/manage'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['redactor']
+                    ],
+                    [
+                        'controllers' => ['setting/manage'],
+                        'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['admin']
                     ],

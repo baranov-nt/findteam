@@ -18,6 +18,7 @@ use Yii;
  * @property string $image_main
  * @property string $images
  * @property string $password_hash
+ * @property string $password_encrypted
  * @property string $auth_key
  * @property string $password_reset_token
  * @property string $email_confirm_token
@@ -29,6 +30,7 @@ use Yii;
  * @property AuthItem[] $itemNames
  * @property Bank[] $banks
  * @property Contact[] $contacts
+ * @property Content[] $contents
  * @property ProfileUser $profileUser
  * @property Schedule[] $schedules
  * @property UserOnline $userOnline
@@ -52,7 +54,7 @@ class User extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['status'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
-            [['alias', 'password_hash', 'password_reset_token', 'email_confirm_token'], 'string', 'max' => 255],
+            [['alias', 'password_hash', 'password_encrypted', 'password_reset_token', 'email_confirm_token'], 'string', 'max' => 255],
             [['username', 'auth_key'], 'string', 'max' => 32],
             [['email'], 'string', 'max' => 64],
             [['phone'], 'string', 'max' => 11],
@@ -61,7 +63,6 @@ class User extends \yii\db\ActiveRecord
             [['alias'], 'unique'],
             [['username'], 'unique'],
             [['email'], 'unique'],
-            [['phone'], 'unique'],
             [['full_phone'], 'unique'],
         ];
     }
@@ -83,6 +84,7 @@ class User extends \yii\db\ActiveRecord
             'image_main' => Yii::t('app', 'Метка изображения'),
             'images' => Yii::t('app', 'Метка изображения доп фото'),
             'password_hash' => Yii::t('app', 'Пароль'),
+            'password_encrypted' => Yii::t('app', 'Зашифрованный пароль'),
             'auth_key' => Yii::t('app', 'Ключ авторизации'),
             'password_reset_token' => Yii::t('app', 'Ключ сброса пароля'),
             'email_confirm_token' => Yii::t('app', 'Ключ подтверждения эл. адреса'),
@@ -129,6 +131,14 @@ class User extends \yii\db\ActiveRecord
     public function getContacts()
     {
         return $this->hasMany(Contact::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getContents()
+    {
+        return $this->hasMany(Content::className(), ['user_id' => 'id']);
     }
 
     /**

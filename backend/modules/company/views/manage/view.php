@@ -13,7 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="profile-company-view">
     <section class="content">
         <div class="box box-success" style="margin-bottom: 50px;">
-            <div class="box-header with-border"><?= Html::a(Yii::t('app', 'Изменить'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?></div>
+            <div class="box-header with-border">
+                <?= Html::a(Yii::t('app', 'Изменить'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            </div>
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [

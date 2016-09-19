@@ -77,10 +77,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-md-6">
                 <div class="box box-solid">
                     <div class="box-header with-border">
-                        <h3 class="box-title"><?= Yii::t('user', 'Выбранные') ?></h3>
+                        <h3 class="box-title"><?= Yii::t('app', 'Выбранные') ?></h3>
                     </div>
                     <div class="box-body">
-                        <?= Html::button('<i class="fa fa-check" aria-hidden="true"></i> '.Yii::t('user', 'Активировать'),
+                        <?= Html::button('<i class="fa fa-check" aria-hidden="true"></i> '.Yii::t('app', 'Активировать'),
                             [
                                 'class' => 'btn btn-success',
                                 'onclick' => '
@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     scrollTo: false
                 })'
                             ])?>
-                        <?= Html::button('<i class="fa fa-ban" aria-hidden="true"></i> '.Yii::t('user', 'Заблокировать'),
+                        <?= Html::button('<i class="fa fa-ban" aria-hidden="true"></i> '.Yii::t('app', 'Заблокировать'),
                             [
                                 'class' => 'btn btn-danger',
                                 'onclick' => '

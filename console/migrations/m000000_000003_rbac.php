@@ -35,7 +35,7 @@ class m000000_000003_rbac extends \yii\db\Migration
 
         $this->batchInsert('{{%auth_rule}}', ['name', 'data', 'created_at', 'updated_at'],
             [
-                ['authorRule', 'O:31:"app\components\rbac\AuthorRule":3:{s:4:"name";s:11:"authorRule";s:9:"createdAt";N;s:9:"updatedAt";N;}', time(), time()]
+                ['authorRule', 'O:34:"common\components\rbac\AuthorRule":3:{s:4:"name";s:11:"authorRule";s:9:"createdAt";N;s:9:"updatedAt";N;}', time(), time()]
             ]);
 
         $this->createTable('{{%auth_item}}', [
@@ -44,6 +44,7 @@ class m000000_000003_rbac extends \yii\db\Migration
             'description'   => $this->text()->notNull(),
             'rule_name'     => $this->string(64),
             'data'          => $this->text(),
+            'place'         => $this->integer(),
             'created_at'    => $this->integer(),
             'updated_at'    => $this->integer()
         ], $tableOptions);
@@ -52,22 +53,21 @@ class m000000_000003_rbac extends \yii\db\Migration
         $this->addForeignKey('auth_item_rule_name_fk', '{{%auth_item}}', 'rule_name', '{{%auth_rule}}',  'name', 'SET NULL', 'CASCADE');
         $this->createIndex('auth_item_type_index', '{{%auth_item}}', 'type');
 
-        $this->batchInsert('{{%auth_item}}', ['name', 'type', 'description', 'rule_name', 'data', 'created_at', 'updated_at'], [
-            ['creator', AuthItem::TYPE_ROLE, Yii::t('app', 'Создатель'), NULL, NULL, time(), time()],
-            ['admin', AuthItem::TYPE_ROLE, Yii::t('app', 'Администратор'), NULL, NULL, time(), time()],
-            ['redactor', AuthItem::TYPE_ROLE, Yii::t('app', 'Редактор сайта'), NULL, NULL, time(), time()],
-            ['adminCompany', AuthItem::TYPE_ROLE, Yii::t('app', 'Администратор компании'), NULL, NULL, time(), time()],
-            ['managerCompany', AuthItem::TYPE_ROLE, Yii::t('app', 'Менеджер компании'), NULL, NULL, time(), time()],
-            ['userCompany', AuthItem::TYPE_ROLE, Yii::t('app', 'Пользователь копании'), NULL, NULL, time(), time()],
-            ['user', AuthItem::TYPE_ROLE, Yii::t('app', 'Пользователь'), NULL, NULL, time(), time()],
+        $this->batchInsert('{{%auth_item}}', ['name', 'type', 'description', 'rule_name', 'data', 'place', 'created_at', 'updated_at'], [
+            ['creator', AuthItem::TYPE_ROLE, Yii::t('app', 'Создатель'), NULL, NULL, 1, time(), time()],
+            ['admin', AuthItem::TYPE_ROLE, Yii::t('app', 'Администратор'), NULL, NULL, 2, time(), time()],
+            ['redactor', AuthItem::TYPE_ROLE, Yii::t('app', 'Редактор сайта'), NULL, NULL, 3, time(), time()],
+            ['adminCompany', AuthItem::TYPE_ROLE, Yii::t('app', 'Администратор компании'), NULL, NULL, 4, time(), time()],
+            ['managerCompany', AuthItem::TYPE_ROLE, Yii::t('app', 'Менеджер компании'), NULL, NULL, 5, time(), time()],
+            ['userCompany', AuthItem::TYPE_ROLE, Yii::t('app', 'Пользователь копании'), NULL, NULL, 6, time(), time()],
+            ['user', AuthItem::TYPE_ROLE, Yii::t('app', 'Пользователь'), NULL, NULL, 7, time(), time()],
 
-            ['manageCompany', AuthItem::TYPE_PERMISSION, Yii::t('app', 'Управлять аакаунтом компании'), NULL, NULL, time(), time()],
+            ['free', AuthItem::TYPE_PERMISSION, Yii::t('app', 'Бесплатно'), NULL, NULL, 1, time(), time()],
+            ['classic', AuthItem::TYPE_PERMISSION, Yii::t('app', 'Пакет Classic'), NULL, NULL, 2, time(), time()],
+            ['vip', AuthItem::TYPE_PERMISSION, Yii::t('app', 'Пакет VIP'), NULL, NULL, 3, time(), time()],
+            ['corporate', AuthItem::TYPE_PERMISSION, Yii::t('app', 'Пакет Corporate'), NULL, NULL, 4, time(), time()],
 
-            ['classic', AuthItem::TYPE_PERMISSION, Yii::t('app', 'Пакет Classic'), NULL, NULL, time(), time()],
-            ['vip', AuthItem::TYPE_PERMISSION, Yii::t('app', 'Пакет VIP'), NULL, NULL, time(), time()],
-            ['corporate', AuthItem::TYPE_PERMISSION, Yii::t('app', 'Пакет Corporate'), NULL, NULL, time(), time()],
-
-            ['authorRule', AuthItem::TYPE_PERMISSION, Yii::t('app', 'Изменять свои записи'), 'authorRule', NULL, time(), time()],
+            ['authorRule', AuthItem::TYPE_PERMISSION, Yii::t('app', 'Изменять свои записи'), 'authorRule', NULL, NULL, time(), time()],
         ]);
 
         $this->createTable('{{%auth_item_child}}', [
@@ -82,7 +82,6 @@ class m000000_000003_rbac extends \yii\db\Migration
         $this->batchInsert('{{%auth_item_child}}', ['parent', 'child'], [
             ['redactor', 'user'],
             ['managerCompany', 'userCompany'],
-            ['managerCompany', 'manageCompany'],
             ['adminCompany', 'managerCompany'],
             ['redactor', 'adminCompany'],
             ['admin', 'redactor'],

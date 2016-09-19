@@ -5,4 +5,5 @@ return [
     'supportEmail' => 'support@example.com',
     'user.passwordResetTokenExpire' => 3600,
     'online' => 300,
+    'secret_key' => 'sdfwer43t3werewtwerwer34',
 ];

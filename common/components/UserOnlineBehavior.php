@@ -8,7 +8,7 @@
 
 namespace common\components;
 
-use common\models\UserOnline;
+use common\models\forms\UserOnlineForm;
 use Yii;
 use yii\base\Behavior;
 use yii\web\Controller;
@@ -25,9 +25,12 @@ class UserOnlineBehavior extends Behavior {
     public function beforeAction()
     {
         if (!Yii::$app->user->isGuest) {
-            $model = UserOnline::findOne(Yii::$app->user->id);
+            if (Yii::$app->id == 'app-frontend') {
+                Yii::$app->layout = 'inspinia-main';
+            }
+            $model = UserOnlineForm::findOne(Yii::$app->user->id);
             if (!$model) {
-                $model = new UserOnline();
+                $model = new UserOnlineForm();
                 $model->user_id = Yii::$app->user->id;
                 $model->online  = time();
                 $model->save();

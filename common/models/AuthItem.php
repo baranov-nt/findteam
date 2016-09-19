@@ -125,7 +125,7 @@ class AuthItem extends \yii\db\ActiveRecord
 
     /**
      * Пользователи, обладающие текущей ролью или допуском
-     * @return $this
+     * @return \yii\db\ActiveQuery
      */
     public function getUsers()
     {
@@ -161,7 +161,7 @@ class AuthItem extends \yii\db\ActiveRecord
 
     /**
      * Родительские роли или допуски
-     * @return $this
+     * @return \yii\db\ActiveQuery
      */
     public function getParents()
     {
@@ -253,6 +253,8 @@ class AuthItem extends \yii\db\ActiveRecord
                 $authAssignment->save();
             }
         }
+
+        return true;
     }
 
     public static function getCompanyRoles()
@@ -319,7 +321,7 @@ class AuthItem extends \yii\db\ActiveRecord
         return static::find()
             ->where(['type' => self::TYPE_PERMISSION])
             ->andWhere(['!=', 'name', 'authorRule'])
-            ->orderBy('description')
+            ->orderBy('place')
             ->all();
     }
 

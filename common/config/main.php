@@ -4,6 +4,7 @@ return [
     'sourceLanguage' => 'ru',
     'timezone' => 'UTC',
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'bootstrap' => ['setting'],
     'components' => [
         'redis' => [
             'class' => 'yii\redis\Connection',
@@ -16,8 +17,21 @@ return [
             'redis' => [
                 'hostname' => 'localhost',
                 'port' => 6379,
-                'database' => 1,
+                'database' => 3,
             ],
+        ],
+        'session' => [
+            'class' => 'yii\redis\Session',
+            'redis' => [
+                'hostname' => 'localhost',
+                'port' => 6379,
+                'database' => 4,
+            ],
+            'timeout' => 30,
+            'cookieParams' => ['httponly' => true, 'lifetime' => 3600 * 4],
+        ],
+        'setting' => [
+            'class' => 'common\components\SetSetting',
         ],
         'i18n' => [
             'class'      => \backend\modules\translate\components\I18N::className(),
@@ -33,6 +47,11 @@ return [
             'translations' => [
                 'app' => [
                     'class'           => yii\i18n\DbMessageSource::className(),
+                    'enableCaching'   => true,
+                    'cachingDuration' => 60 * 60 * 2, // cache on 2 hours
+                ],
+                '*' => [
+                    'class'           => 'common\components\TranslateContent',
                     'enableCaching'   => true,
                     'cachingDuration' => 60 * 60 * 2, // cache on 2 hours
                 ],

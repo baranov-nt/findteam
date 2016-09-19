@@ -4,25 +4,43 @@
 /* @var $model \frontend\models\PasswordResetRequestForm */
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+
 $this->title = Yii::t('app', 'Запрос на сброс пароля.');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-request-password-reset">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="col-md-8 col-md-offset-2">
+        <div class="ibox float-e-margins" style="padding-bottom: 60px;">
+            <div class="ibox-title">
+                <h5><?= Yii::t('app', 'Пожалуйста, введите ваш емайл, чтобы мы отправили ссылку для сброса пароля.') ?></h5>
+                <div class="ibox-tools">
 
-    <p><?= Yii::t('app', 'Пожалуйста, введите ваш емайл, чтобы мы отправили ссылку для сброса пароля.') ?></p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(); ?>
-
-            <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
-
-            <div class="form-group">
-                <?= Html::submitButton(Yii::t('app', 'Отправить'), ['class' => 'btn btn-primary']) ?>
+                </div>
             </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <?php $form = ActiveForm::begin([
+                        'id' => 'form',
+                        'fieldConfig' => [
+                            'template' => '{label}<div class="input-group">{input}
+                            <span class="input-group-addon"><i class="fa fa-{font-awesome}"></i></span>
+                         </div><i>{hint}</i>{error}'
+                        ]]); ?>
 
-            <?php ActiveForm::end(); ?>
+                    <div class="col-md-12">
+                        <?= $form->field($model, 'email', ['parts' => ['{font-awesome}' => 'envelope']])
+                            ->textInput(['placeholder' => 'Электронная почта', 'autofocus' => true])
+                            ->hint(Yii::t('app', 'Мы вышлем Вам письмо по электронной почте, со ссылкой, для восстановление пароля.'))  ?>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <?= Html::submitButton(Yii::t('app', 'Отправить'), ['class' => 'btn btn-primary']) ?>
+                        </div>
+                    </div>
+                    <?php ActiveForm::end(); ?>
+                </div>
+            </div>
         </div>
     </div>
 </div>
