@@ -6,12 +6,14 @@
  * Time: 14:13
  */
 use yii\bootstrap\Carousel;
+use yii\bootstrap\Html;
+use yii\helpers\Url;
 
 $this->registerCss(".landing-page .header-back.one {
-    background: url('../img/landing/header_one.jpg') 50% 0 no-repeat;
+    background: url('../images/background.jpg') 50% 0 no-repeat;
 }");
 $this->registerCss(".landing-page .header-back.two {
-    background: url('../img/landing/header_two.jpg') 50% 0 no-repeat;
+    background: url('../images/runner.jpg') 50% 0 no-repeat;
 }");
 ?>
 <?= Carousel::widget([
@@ -19,18 +21,16 @@ $this->registerCss(".landing-page .header-back.two {
         [
             'content' => '<div class="container">
                 <div class="carousel-caption">
-                    <h1>We craft<br>
-                        brands, web apps,<br>
-                        and user interfaces<br>
-                        we are IN+ studio</h1>
-                    <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                    <h1>Найди свое занятие</h1>
+                    <h3 style="font-size: 20px;"><strong>С нами Вы сможете найти компанию людей,<br> которые готовы поддержать вашу идею.</strong></h3>
+                    <h3 style="font-size: 20px;"><strong>Мы - это не только сервис для поиска занятий,<br> мы - это объединение людей с одной целью!</strong></h3>
                     <p>
-                        <a class="btn btn-lg btn-primary" href="#" role="button">READ MORE</a>
-                        <a class="caption-link" href="#" role="button">Inspinia Theme</a>
+                        <a class="btn btn-lg btn-primary" href="#" role="button">Найти</a>
+                        <a class="caption-link" href="#" role="button">Поиск события</a>
                     </p>
                 </div>
                 <div class="carousel-image wow zoomIn animated" style="visibility: visible;">
-                    <img src="/img/landing/laptop.png" alt="laptop">
+                    <img src="/images/football.jpg" style="border-radius: 10px;" alt="laptop">
                 </div>
             </div>
             <div class="header-back one"></div>',
@@ -43,9 +43,9 @@ $this->registerCss(".landing-page .header-back.two {
         [
             'content' => '<div class="container">
                 <div class="carousel-caption">
-                    <h1>We create meaningful <br> interfaces that inspire.</h1>
-                    <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+                    <h1>Собери свою команду.</h1>
+                    <h3 style="font-size: 20px;"><strong>Регистрируйся и собирай свою команду прямо сейчас!</strong></h3>
+                    <p>'.Html::a('Регистрация', Url::to(['/site/signup']), ['class' => 'btn btn-lg btn-primary']).'</p>
                 </div>
             </div>
             <!-- Set background for slide in css -->

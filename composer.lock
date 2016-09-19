@@ -692,16 +692,16 @@
         },
         {
             "name": "bower-asset/moment",
-            "version": "2.14.1",
+            "version": "2.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moment/moment.git",
-                "reference": "227746b29044a4c2160ae7c597c7f24aacac2635"
+                "reference": "c587bf0063c18214238ca83f3f9c6170daf25bed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moment/moment/zipball/227746b29044a4c2160ae7c597c7f24aacac2635",
-                "reference": "227746b29044a4c2160ae7c597c7f24aacac2635",
+                "url": "https://api.github.com/repos/moment/moment/zipball/c587bf0063c18214238ca83f3f9c6170daf25bed",
+                "reference": "c587bf0063c18214238ca83f3f9c6170daf25bed",
                 "shasum": ""
             },
             "type": "bower-asset-library",
@@ -936,16 +936,16 @@
         },
         {
             "name": "cebe/markdown",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cebe/markdown.git",
-                "reference": "54a2c49de31cc44e864ebf0500a35ef21d0010b2"
+                "reference": "c30eb5e01fe021cc5bba2f9ee0eeef96d4931166"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cebe/markdown/zipball/54a2c49de31cc44e864ebf0500a35ef21d0010b2",
-                "reference": "54a2c49de31cc44e864ebf0500a35ef21d0010b2",
+                "url": "https://api.github.com/repos/cebe/markdown/zipball/c30eb5e01fe021cc5bba2f9ee0eeef96d4931166",
+                "reference": "c30eb5e01fe021cc5bba2f9ee0eeef96d4931166",
                 "shasum": ""
             },
             "require": {
@@ -992,7 +992,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2015-03-06 05:28:07"
+            "time": "2016-09-14 20:40:20"
         },
         {
             "name": "codemix/yii2-localeurls",

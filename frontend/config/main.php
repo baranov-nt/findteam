@@ -8,7 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
-    'name'  => 'Temp App',
+    'name'  => 'FindTeam',
     'layout' => 'inspinia-landing',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'geoData'],

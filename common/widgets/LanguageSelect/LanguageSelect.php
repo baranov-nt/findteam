@@ -21,8 +21,8 @@ class LanguageSelect extends Widget
 
     public $languages = [
         'en' => 'English',
-        'fr' => 'Un Français',
-        'ch' => '中國',
+        /*'fr' => 'Un Français',
+        'ch' => '中國',*/
         'ru' => 'Русский',
     ];
 

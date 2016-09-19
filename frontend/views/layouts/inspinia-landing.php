@@ -131,7 +131,7 @@ endif;
     </div>
 </div>
 
-<section id="contact" class="gray-section contact">
+<!--<section id="contact" class="gray-section contact">
     <div class="container">
         <div class="row m-b-lg">
             <div class="col-lg-12 text-center">
@@ -177,7 +177,7 @@ endif;
             </div>
         </div>
     </div>
-</section>
+</section>-->
 
 <?php $this->endBody() ?>
 </body>
