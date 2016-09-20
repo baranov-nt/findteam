@@ -226,20 +226,20 @@ use common\models\forms\GeoCityForm;
             </div>
 
             <?php
-            if (!isset($model->profileUser->company_id) || $model->profileUser->company_id != null):
-                ?>
+/*            if (!isset($model->profileUser->company_id) || $model->profileUser->company_id != null):
+                */?><!--
                 <div class="col-md-12">
-                    <?= $form->field($model, 'tariff_name')->dropDownList($model->tariffesOfUserList, [
+                    <?/*= $form->field($model, 'tariff_name')->dropDownList($model->tariffesOfUserList, [
                         'class'         => 'form-control selectpicker',
                         'data' => [
                             'style' => 'btn-primary',
                             'size' => 7,
                             'title' => Yii::t('app', 'Тариф')
-                        ]]) ?>
+                        ]]) */?>
                 </div>
-                <?php
-            endif;
-            ?>
+                --><?php
+/*            endif;
+            */?>
 
             <div class="col-md-12">
                 <?= $form->field($model, 'password')->passwordInput(['placeholder' => Yii::t('app', 'Пароль')]) ?>

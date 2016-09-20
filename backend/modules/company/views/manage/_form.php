@@ -23,14 +23,14 @@ BootstrapSelectAsset::register($this);
         </div>
 
         <div class="col-md-12">
-            <?php $model->tariff ?>
-            <?= $form->field($model, 'tariff')->dropDownList($model->tariffesOfCompanyList, [
+            <?php /*$model->tariff */?><!--
+            --><?/*= $form->field($model, 'tariff')->dropDownList($model->tariffesOfCompanyList, [
                 'class'         => 'form-control selectpicker',
                 'data' => [
                     'style' => 'btn-primary',
                     'size' => 7,
                     'title' => Yii::t('app', 'Тариф')
-                ]])->label(Yii::t('app', 'Тариф')) ?>
+                ]])->label(Yii::t('app', 'Тариф')) */?>
         </div>
 
         <?/*= $form->field($model, 'type')->textInput() */?>

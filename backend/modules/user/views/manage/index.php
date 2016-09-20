@@ -50,15 +50,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             },
                             'filter' => $searchModel->rolesList,
                         ],
-                        [
+                        /*[
                             'attribute' => 'tariff_name',
                             'label' => Yii::t('app', 'Тариф'),
                             'value' => function ($model, $key, $index, $column) {
-                                /* @var $model \common\models\Identity */
+                                // @var $model \common\models\Identity
                                 return $model->tariffDescription;
                             },
                             'filter' => $searchModel->tariffesList,
-                        ],
+                        ],*/
                         [
                             'attribute' => 'status',
                             'format' => 'raw',
