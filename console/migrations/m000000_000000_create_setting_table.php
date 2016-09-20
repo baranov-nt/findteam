@@ -23,7 +23,7 @@ class m000000_000000_create_setting_table extends Migration
             'show_all_countries'    => $this->boolean()->defaultValue(true)->comment('Использовать все страны'),
         ], $tableOptions);
 
-        $this->batchInsert('{{%setting}}', ['id'], [
+        $this->batchInsert('{{%setting}}', ['id', 'show_all_cities', 'show_all_countries'], [
             [1]
         ]);
     }

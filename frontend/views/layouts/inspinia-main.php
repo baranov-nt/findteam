@@ -64,7 +64,7 @@ $user = Yii::$app->user->identity;
 
     $menuItems[] = [
         'label' => Yii::t('app', '<i class="fa fa-cog" aria-hidden="true"></i>'),
-        'url' => Url::to('http://admin.boyar-nt.ru/'),
+        'url' => Url::to('http://admin.sport.phpnt.ru/'),
         'linkOptions' => [
             'target' => '_blank'
         ]

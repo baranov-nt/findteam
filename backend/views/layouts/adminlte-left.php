@@ -52,6 +52,11 @@ use yii\widgets\Menu;
                 'url' => Url::to(['/content/manage/index']),
                 'options' => ['class' => Yii::$app->controller->module->id == 'content' ? 'active' : '']
             ];
+            $items[] = [
+                'label' => '<i class="fa fa-language"></i> <span>' . Yii::t('app', 'Управление переводом') . '</span>',
+                'url' => Url::to(['/translate/manage/index']),
+                'options' => ['class' => Yii::$app->controller->module->id == 'translate' ? 'active' : '']
+            ];
         }
 
         if (Yii::$app->user->can('redactor') && Yii::$app->setting->show_all_cities == null) {
@@ -67,11 +72,6 @@ use yii\widgets\Menu;
                 'label' => '<i class="fa fa-map"></i> <span>' . Yii::t('app', 'Управление странами') . '</span>',
                 'url' => Url::to(['/countries/manage/index']),
                 'options' => ['class' => Yii::$app->controller->module->id == 'countries' ? 'active' : '']
-            ];
-            $items[] = [
-                'label' => '<i class="fa fa-language"></i> <span>' . Yii::t('app', 'Управление переводом') . '</span>',
-                'url' => Url::to(['/translate/manage/index']),
-                'options' => ['class' => Yii::$app->controller->module->id == 'translate' ? 'active' : '']
             ];
         }
 

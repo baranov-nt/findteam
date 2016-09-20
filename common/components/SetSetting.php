@@ -23,12 +23,15 @@ class SetSetting extends Object
         parent::init();
         $cache = \Yii::$app->cache;
         $setting = $cache->get('setting');
+        //$setting = $cache->delete('setting');
         if (!$setting) {
             $model = Setting::findOne(1);
+            //dd($model);
             $cache->set('setting', $model);
             $this->show_all_cities      = $model->show_all_cities;
             $this->show_all_countries   = $model->show_all_countries;
         } else {
+            //dd($setting);
             $this->show_all_cities      = $setting->show_all_cities;
             $this->show_all_countries   = $setting->show_all_countries;
         }

@@ -6318,7 +6318,7 @@ body.landing-page {
   z-index: 10;
 }
 .landing-page .carousel .item {
-  height: 470px;
+  height: 800px;
   background-color: #777;
 }
 .landing-page .carousel-inner > .item > img {

@@ -17,7 +17,7 @@ return [
             'redis' => [
                 'hostname' => 'localhost',
                 'port' => 6379,
-                'database' => 3,
+                'database' => 5,
             ],
         ],
         'session' => [
@@ -25,7 +25,7 @@ return [
             'redis' => [
                 'hostname' => 'localhost',
                 'port' => 6379,
-                'database' => 4,
+                'database' => 6,
             ],
             'timeout' => 30,
             'cookieParams' => ['httponly' => true, 'lifetime' => 3600 * 4],
@@ -35,7 +35,7 @@ return [
         ],
         'i18n' => [
             'class'      => \backend\modules\translate\components\I18N::className(),
-            'languages' => ['en', 'fr', 'ch'],
+            'languages' => ['en'/*, 'fr', 'ch'*/],
             'format'     => 'db',
             'sourcePath' => [
                 __DIR__ . '/../../frontend',
